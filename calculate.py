@@ -1,173 +1,163 @@
-input_stats = {
-    # attack
-    "a_00_g": 0,
-    "a_00_e": 0,
-    "a_00_p": 0,
-    # attack rate
-    "a_01_g": 0,
-    "a_01_e": 0,
-    "a_01_p": 0,
-    # crit rate
-    "a_02_g": 0,
-    "a_02_e": 0,
-    "a_02_p": 0,
-    # crit dmg
-    "a_04_g": 0,
-    "a_04_e": 0,
-    "a_04_p": 0,
-    # all skill amp
-    "a_05_g": 0,
-    "a_05_e": 0,
-    "a_05_p": 0,
-    # accuracy
-    "a_06_g": 0,
-    "a_06_e": 0,
-    "a_06_p": 0,
-    # penetration
-    "a_07_g": 0,
-    "a_07_e": 0,
-    "a_07_p": 0,
-    # add dmg
-    "a_08_g": 0,
-    "a_08_e": 0,
-    "a_08_p": 0,
-    # ignore evasion
-    "a_10_g": 0,
-    "a_10_e": 0,
-    "a_10_p": 0,
-    # ignore dmg red
-    "a_11_g": 0,
-    "a_11_e": 0,
-    "a_11_p": 0,
-    # final dmg increase
-    "a_12_g": 0,
-    "a_12_e": 0,
-    "a_12_p": 0,
-    # ignore resist crit rate
-    "a_13_g": 0,
-    "a_13_e": 0,
-    "a_13_p": 0,
-    # ignore resist crit dmg
-    "a_14_g": 0,
-    "a_14_e": 0,
-    "a_14_p": 0,
-    # ignore resist skill amp
-    "a_15_g": 0,
-    "a_15_e": 0,
-    "a_15_p": 0,
-    # normal dmg up
-    "a_16_g": 0,
-    "a_16_e": 0,
-    "a_16_p": 0,
-    # cancel ignore penetration
-    "a_17_g": 0,
-    "a_17_e": 0,
-    "a_17_p": 0,
-    # hp
-    "d_18_g": 0,
-    "d_18_e": 0,
-    "d_18_p": 0,
-    # defense
-    "d_19_g": 0,
-    "d_19_e": 0,
-    "d_19_p": 0,
-    # defense rate
-    "d_20_g": 0,
-    "d_20_e": 0,
-    "d_20_p": 0,
-    # evasion
-    "d_21_g": 0,
-    "d_21_e": 0,
-    "d_21_p": 0,
-    # dmg red
-    "d_22_g": 0,
-    "d_22_e": 0,
-    "d_22_p": 0,
-    # resit crit rate
-    "d_23_g": 0,
-    "d_23_e": 0,
-    "d_23_p": 0,
-    # resit crit dmg
-    "d_24_g": 0,
-    "d_24_e": 0,
-    "d_24_p": 0,
-    # resit skill amp
-    "d_25_g": 0,
-    "d_25_e": 0,
-    "d_25_p": 0,
-    # ignore penetration
-    "d_26_g": 0,
-    "d_26_e": 0,
-    "d_26_p": 0,
-    # ignore accuracy
-    "d_27_g": 0,
-    "d_27_e": 0,
-    "d_27_p": 0,
-    # final dmg decrease
-    "d_28_g": 0,
-    "d_28_e": 0,
-    "d_28_p": 0,
-    # cancel ignore dmg reduce
-    "d_29_g": 0,
-    "d_29_e": 0,
-    "d_29_p": 0,
-}
-
-stats = [
-    ["a", "00", 34.5],
-    ["a", "01", 3],
-    ["a", "02", 750],
-    ["a", "04", 177],
-    ["a", "05", 349],
-    ["a", "06", 6.5],
-    ["a", "07", 71],
-    ["a", "08", 35],
-    ["a", "10", 4.5],
-    ["a", "11", 1604],
-    ["a", "12", 16.8],
-    ["a", "13", 574],
-    ["a", "14", 142.5],
-    ["a", "15", 267],
-    ["a", "16", 85],
-    ["a", "17", 47.8],
-    ["d", "18", 5],
-    ["d", "19", 21],
-    ["d", "20", 2.4],
-    ["d", "21", 5.3],
-    ["d", "22", 19.5],
-    ["d", "23", 636],
-    ["d", "24", 150],
-    ["d", "25", 296.5],
-    ["d", "26", 53.1],
-    ["d", "27", 5.3],
-    ["d", "28", 1451],
-    ["d", "29", 19.9],
-]
+from dataclasses import dataclass
+from enum import Enum, auto
 
 
-def calc():
-    general_cp = 0x0
-    pve_cp = 0x0
-    pvp_cp = 0x0
-    pure_pve_cp = 0x0
-    pure_pvp_cp = 0x0
-    attack_ability_general = 0x0
-    attack_ability_pve = 0x0
-    attack_ability_pvp = 0x0
-    defense_ability_general = 0x0
-    defense_ability_pve = 0x0
-    defense_ability_pvp = 0x0
+class StatType(Enum):
+    Attack = auto()
+    Defense = auto()
 
-    for stats_element in stats:
-        type_and_id = str(stats_element[0x0]) + "_" + str(stats_element[0x1])
 
-        type_and_id_general = type_and_id + "_g"
-        type_and_id_pve = type_and_id + "_e"
-        type_and_id_pvp = type_and_id + "_p"
+@dataclass
+class StatValue:
+    general: int = 0
+    pve: int = 0
+    pvp: int = 0
 
-        general_stat_value = input_stats[type_and_id_general] * float(stats_element[2])
-        pve_stat_value = input_stats[type_and_id_pve] * float(stats_element[2])
-        pvp_stat_value = input_stats[type_and_id_pvp] * float(stats_element[2])
+
+@dataclass
+class Stat:
+    VALUE_TYPE: StatType
+    MULTIPLIER: float
+    value: StatValue
+
+
+class Stats:
+    def __init__(
+        self,
+        attack: StatValue = StatValue(),
+        attack_rate: StatValue = StatValue(),
+        crit_rate: StatValue = StatValue(),
+        crit_dmg: StatValue = StatValue(),
+        all_skill_amp: StatValue = StatValue(),
+        accuracy: StatValue = StatValue(),
+        penetration: StatValue = StatValue(),
+        add_dmg: StatValue = StatValue(),
+        ignore_evasion: StatValue = StatValue(),
+        ignore_dmg_red: StatValue = StatValue(),
+        final_dmg_increase: StatValue = StatValue(),
+        ignore_resist_crit_rate: StatValue = StatValue(),
+        ignore_resist_crit_dmg: StatValue = StatValue(),
+        ignore_resist_skill_amp: StatValue = StatValue(),
+        normal_dmg_up: StatValue = StatValue(),
+        cancel_ignore_penetration: StatValue = StatValue(),
+        hp: StatValue = StatValue(),
+        defense: StatValue = StatValue(),
+        defense_rate: StatValue = StatValue(),
+        evasion: StatValue = StatValue(),
+        dmg_red: StatValue = StatValue(),
+        resit_crit_rate: StatValue = StatValue(),
+        resit_crit_dmg: StatValue = StatValue(),
+        resit_skill_amp: StatValue = StatValue(),
+        ignore_penetration: StatValue = StatValue(),
+        ignore_accuracy: StatValue = StatValue(),
+        final_dmg_decrease: StatValue = StatValue(),
+        cancel_ignore_dmg_reduce: StatValue = StatValue(),
+    ):
+        self.items: dict[str, Stat] = {
+            "attack": Stat(VALUE_TYPE=StatType.Attack, MULTIPLIER=34.5, value=attack),
+            "attack_rate": Stat(
+                VALUE_TYPE=StatType.Attack, MULTIPLIER=3, value=attack_rate
+            ),
+            "crit_rate": Stat(
+                VALUE_TYPE=StatType.Attack, MULTIPLIER=750, value=crit_rate
+            ),
+            "crit_dmg": Stat(
+                VALUE_TYPE=StatType.Attack, MULTIPLIER=177, value=crit_dmg
+            ),
+            "all_skill_amp": Stat(
+                VALUE_TYPE=StatType.Attack, MULTIPLIER=349, value=all_skill_amp
+            ),
+            "accuracy": Stat(
+                VALUE_TYPE=StatType.Attack, MULTIPLIER=6.5, value=accuracy
+            ),
+            "penetration": Stat(
+                VALUE_TYPE=StatType.Attack, MULTIPLIER=71, value=penetration
+            ),
+            "add_dmg": Stat(VALUE_TYPE=StatType.Attack, MULTIPLIER=35, value=add_dmg),
+            "ignore_evasion": Stat(
+                VALUE_TYPE=StatType.Attack, MULTIPLIER=4.5, value=ignore_evasion
+            ),
+            "ignore_dmg_red": Stat(
+                VALUE_TYPE=StatType.Attack, MULTIPLIER=1604, value=ignore_dmg_red
+            ),
+            "final_dmg_increase": Stat(
+                VALUE_TYPE=StatType.Attack, MULTIPLIER=16.8, value=final_dmg_increase
+            ),
+            "ignore_resist_crit_rate": Stat(
+                VALUE_TYPE=StatType.Attack,
+                MULTIPLIER=574,
+                value=ignore_resist_crit_rate,
+            ),
+            "ignore_resist_crit_dmg": Stat(
+                VALUE_TYPE=StatType.Attack,
+                MULTIPLIER=142.5,
+                value=ignore_resist_crit_dmg,
+            ),
+            "ignore_resist_skill_amp": Stat(
+                VALUE_TYPE=StatType.Attack,
+                MULTIPLIER=267,
+                value=ignore_resist_skill_amp,
+            ),
+            "normal_dmg_up": Stat(
+                VALUE_TYPE=StatType.Attack, MULTIPLIER=85, value=normal_dmg_up
+            ),
+            "cancel_ignore_penetration": Stat(
+                VALUE_TYPE=StatType.Attack,
+                MULTIPLIER=47.8,
+                value=cancel_ignore_penetration,
+            ),
+            "hp": Stat(VALUE_TYPE=StatType.Defense, MULTIPLIER=5, value=hp),
+            "defense": Stat(VALUE_TYPE=StatType.Defense, MULTIPLIER=21, value=defense),
+            "defense_rate": Stat(
+                VALUE_TYPE=StatType.Defense, MULTIPLIER=2.4, value=defense_rate
+            ),
+            "evasion": Stat(VALUE_TYPE=StatType.Defense, MULTIPLIER=5.3, value=evasion),
+            "dmg_red": Stat(
+                VALUE_TYPE=StatType.Defense, MULTIPLIER=19.5, value=dmg_red
+            ),
+            "resit_crit_rate": Stat(
+                VALUE_TYPE=StatType.Defense, MULTIPLIER=636, value=resit_crit_rate
+            ),
+            "resit_crit_dmg": Stat(
+                VALUE_TYPE=StatType.Defense, MULTIPLIER=150, value=resit_crit_dmg
+            ),
+            "resit_skill_amp": Stat(
+                VALUE_TYPE=StatType.Defense, MULTIPLIER=296.5, value=resit_skill_amp
+            ),
+            "ignore_penetration": Stat(
+                VALUE_TYPE=StatType.Defense, MULTIPLIER=53.1, value=ignore_penetration
+            ),
+            "ignore_accuracy": Stat(
+                VALUE_TYPE=StatType.Defense, MULTIPLIER=5.3, value=ignore_accuracy
+            ),
+            "final_dmg_decrease": Stat(
+                VALUE_TYPE=StatType.Defense, MULTIPLIER=1451, value=final_dmg_decrease
+            ),
+            "cancel_ignore_dmg_reduce": Stat(
+                VALUE_TYPE=StatType.Defense,
+                MULTIPLIER=19.9,
+                value=cancel_ignore_dmg_reduce,
+            ),
+        }
+
+
+def calculate_combat_power(stats: Stats):
+    general_cp = 0
+    pve_cp = 0
+    pvp_cp = 0
+    pure_pve_cp = 0
+    pure_pvp_cp = 0
+    attack_ability_general = 0
+    attack_ability_pve = 0
+    attack_ability_pvp = 0
+    defense_ability_general = 0
+    defense_ability_pve = 0
+    defense_ability_pvp = 0
+
+    for _, stats_element in stats.items.items():
+        general_stat_value = stats_element.value.general * stats_element.MULTIPLIER
+        pve_stat_value = stats_element.value.pve * stats_element.MULTIPLIER
+        pvp_stat_value = stats_element.value.pvp * stats_element.MULTIPLIER
 
         general_cp += general_stat_value
         pve_cp += general_stat_value + pve_stat_value
@@ -176,13 +166,13 @@ def calc():
         pure_pvp_cp += pvp_stat_value
 
         # atack ability
-        if stats_element[0x0] == "a":
+        if stats_element.VALUE_TYPE == StatType.Attack:
             attack_ability_general += general_stat_value
             attack_ability_pve += pve_stat_value
             attack_ability_pvp += pvp_stat_value
 
         # defense ability
-        if stats_element[0x0] == "d":
+        if stats_element.VALUE_TYPE == StatType.Defense:
             defense_ability_general += general_stat_value
             defense_ability_pve += pve_stat_value
             defense_ability_pvp += pvp_stat_value
@@ -198,3 +188,4 @@ def calc():
     print("defense ability general", defense_ability_general)
     print("defense ability pve", defense_ability_pve)
     print("defense ability pvp", defense_ability_pvp)
+
