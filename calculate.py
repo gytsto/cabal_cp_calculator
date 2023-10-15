@@ -64,8 +64,8 @@ class Stats:
             "penetration"              : Stat(VALUE_TYPE = StatType.Attack , MULTIPLIER = 71   , value = penetration),
             "add_dmg"                  : Stat(VALUE_TYPE = StatType.Attack , MULTIPLIER = 35   , value = add_dmg),
             "ignore_evasion"           : Stat(VALUE_TYPE = StatType.Attack , MULTIPLIER = 4.5  , value = ignore_evasion),
-            "ignore_dmg_red"           : Stat(VALUE_TYPE = StatType.Attack , MULTIPLIER = 1604 , value = ignore_dmg_red),
-            "final_dmg_increase"       : Stat(VALUE_TYPE = StatType.Attack , MULTIPLIER = 16.8 , value = final_dmg_increase),
+            "ignore_dmg_red"           : Stat(VALUE_TYPE = StatType.Attack , MULTIPLIER = 16.8 , value = ignore_dmg_red),
+            "final_dmg_increase"       : Stat(VALUE_TYPE = StatType.Attack , MULTIPLIER = 1604 , value = final_dmg_increase),
             "ignore_resist_crit_rate"  : Stat(VALUE_TYPE = StatType.Attack , MULTIPLIER = 574  , value = ignore_resist_crit_rate),
             "ignore_resist_crit_dmg"   : Stat(VALUE_TYPE = StatType.Attack , MULTIPLIER = 142.5, value = ignore_resist_crit_dmg),
             "ignore_resist_skill_amp"  : Stat(VALUE_TYPE = StatType.Attack , MULTIPLIER = 267  , value = ignore_resist_skill_amp),
@@ -121,6 +121,14 @@ def calculate_combat_power(stats: Stats):
 
     return (
         StatValue(int(general_cp), int(pure_pve_cp), int(pure_pvp_cp)),
-        StatValue(int(attack_ability_general), int(attack_ability_pve), int(attack_ability_pvp)),
-        StatValue(int(defense_ability_general), int(defense_ability_pve), int(defense_ability_pvp)),
+        StatValue(
+            int(attack_ability_general),
+            int(attack_ability_pve),
+            int(attack_ability_pvp),
+        ),
+        StatValue(
+            int(defense_ability_general),
+            int(defense_ability_pve),
+            int(defense_ability_pvp),
+        ),
     )
